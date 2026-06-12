@@ -37,6 +37,7 @@ export default function Navbar() {
 
   const menuItems = [
     { label: "Browse Jobs", href: "/jobs" },
+    { label: "Companies", href: "/companies" },
     { label: "Company", href: "/company" },
     { label: "Pricing", href: "/pricing" },
   ];

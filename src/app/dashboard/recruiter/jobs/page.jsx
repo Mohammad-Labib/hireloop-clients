@@ -1,6 +1,7 @@
 import { getCompanyJobs } from '@/lib/api/jobs';
 import React from 'react';
 import { Table, Chip, Button } from "@heroui/react";
+import { getLoggedInRecruiterCompany } from '@/lib/api/companies';
 
 // TODO: Replace placeholders with your actual gravity icon imports if named differently
 // import { Eye, Edit, Trash } from "gravity-icons-package"; 
@@ -9,8 +10,9 @@ const EditIcon = () => <span>✏️</span>;
 const DeleteIcon = () => <span>🗑️</span>;
 
 const RecruiterJobs = async () => {
-    const companyId = 'comp_987654'; // todo
-    const jobs = await getCompanyJobs(companyId) || []; 
+    // const companyId = 'comp_987654'; // todo
+    const company = await getLoggedInRecruiterCompany();
+    const jobs = await getCompanyJobs(company._id) || []; 
 
     // Helper function to dynamically color status badges
     const getStatusColor = (status) => {
