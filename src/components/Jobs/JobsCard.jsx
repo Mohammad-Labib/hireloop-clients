@@ -5,7 +5,6 @@ import {
   Card,
   Avatar,
   Chip,
-  Button,
 } from "@heroui/react";
 
 import {
@@ -16,6 +15,8 @@ import {
 } from "@gravity-ui/icons";
 
 export default function JobCard({ job }) {
+  if (!job) return null;
+
   const {
     _id,
     title,
@@ -29,6 +30,9 @@ export default function JobCard({ job }) {
     companyName,
     category,
   } = job;
+
+  // MongoDB Object ID ($oid) বা সাধারণ String ID হ্যান্ডেল করার সেফ কোড
+  const jobId = _id?.$oid || _id;
 
   return (
     <Card className="bg-[#0f0f13] border border-white/10 rounded-3xl p-6 h-full">
@@ -82,8 +86,8 @@ export default function JobCard({ job }) {
             <div className="flex items-center gap-2">
               <CircleDollar className="size-4" />
               <span>
-                {minSalary.toLocaleString()} -{" "}
-                {maxSalary.toLocaleString()} {currency}
+                {minSalary?.toLocaleString()} -{" "}
+                {maxSalary?.toLocaleString()} {currency}
               </span>
             </div>
           </Chip>
@@ -91,6 +95,7 @@ export default function JobCard({ job }) {
           <Chip
             variant="bordered"
             radius="full"
+            className="capitalize"
           >
             {type}
           </Chip>
@@ -98,6 +103,7 @@ export default function JobCard({ job }) {
           <Chip
             variant="bordered"
             radius="full"
+            className="capitalize"
           >
             {category}
           </Chip>
@@ -109,15 +115,14 @@ export default function JobCard({ job }) {
           Active Hiring
         </span>
 
-        <Button
-          as={Link}
-          href={`/jobs/${_id}`}
-          color="primary"
-          radius="full"
-          endContent={<ArrowRight className="size-4" />}
+        {/* 🛠️ ফিক্সড লিংক: কাস্টম প্রপস বাদ দিয়ে পিওর Tailwind CSS ব্যবহার করা হয়েছে */}
+        <Link
+          href={`/jobs/${jobId}`}
+          className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-5 py-2.5 text-sm font-medium inline-flex items-center gap-2 transition-all active:scale-95 shadow-lg shadow-purple-600/10"
         >
-          Apply Now
-        </Button>
+          <span>Apply Now</span>
+          <ArrowRight className="size-4" />
+        </Link>
       </Card.Footer>
     </Card>
   );
