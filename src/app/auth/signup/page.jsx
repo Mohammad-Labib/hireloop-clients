@@ -5,12 +5,17 @@ import {Description, Label, Radio, RadioGroup} from "@heroui/react";
 import Link from "next/link";
 import { Input, Button } from "@heroui/react";
 import { signUp } from "@/lib/auth-client";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [role, setRole] = useState("seeker")
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/";
 
   const [formData, setFormData] = useState({
     name: "",
@@ -55,7 +60,10 @@ export default function SignupPage() {
         name: "",
         email: "",
         password: "",
+        
       });
+      router.push(redirectTo);
+      
     } catch (err) {
       setError(err.message || "Signup failed");
     } finally {
@@ -176,7 +184,7 @@ export default function SignupPage() {
         <p className="text-center text-slate-400 mt-6 text-sm">
           Already have an account?{" "}
           <Link
-            href="/auth/signin"
+            href= {`/auth/signin?redirect=${redirectTo}`}
             className="text-blue-500 hover:text-blue-400 font-medium underline underline-offset-4"
           >
             Sign In

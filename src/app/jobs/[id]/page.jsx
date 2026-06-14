@@ -1,4 +1,5 @@
 import { getJobById } from '@/lib/api/jobs';
+import Link from 'next/link';
 import React from 'react';
 
 const JobDetailsPage = async ({ params }) => {
@@ -44,9 +45,13 @@ const JobDetailsPage = async ({ params }) => {
 
                     {/* এপ্লাই বাটন ও ডেডলাইন */}
                     <div className="flex flex-col items-start md:items-end gap-2">
-                        <button className="w-full md:w-auto bg-violet-600 hover:bg-violet-700 text-white font-medium px-8 py-3 rounded-xl transition-all duration-200 active:scale-95 shadow-lg shadow-violet-600/20">
-                            Apply Now
-                        </button>
+                        <Link className="w-full md:w-auto bg-violet-600 hover:bg-violet-700 text-white font-medium px-8 py-3 rounded-xl transition-all duration-200 active:scale-95 shadow-lg shadow-violet-600/20"
+                        href={`/jobs/${id}/apply`}
+                        >
+                        
+                            Apply for Jobs
+                        </Link>
+                        
                         <p className="text-xs text-rose-400 font-medium mt-1">
                             Deadline: {formatDate(job.deadline)}
                         </p>

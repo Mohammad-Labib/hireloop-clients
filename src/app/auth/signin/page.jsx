@@ -4,17 +4,22 @@ import { useState } from "react";
 import Link from "next/link";
 import { Input, Button } from "@heroui/react";
 import {  signIn } from "@/lib/auth-client"; // Better Auth ক্লায়েন্ট ইনস্ট্যান্স
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SigninPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
+  const searchparams = useSearchParams();
+  const redirectTo = searchparams.get("redirect") || "/"
+  // console.log("Redireacting: ", redirectTo);
   // স্ট্যান্ডার্ড ও নিরাপদ চেঞ্জ হ্যান্ডলার
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,7 +53,10 @@ export default function SigninPage() {
       setFormData({
         email: "",
         password: "",
+        // router.push(redirectTo);
       });
+      router.push(redirectTo);
+
     } catch (err) {
       setError(err.message || "Sign in failed");
     } finally {
@@ -127,7 +135,7 @@ export default function SigninPage() {
         <p className="text-center text-slate-400 mt-6 text-sm">
           Don&apos;t have an account yet?{" "}
           <Link
-            href="/auth/signup"
+            href= {`/auth/signup?redirect=${redirectTo}`}
             className="text-blue-500 hover:text-blue-400 font-medium underline underline-offset-4"
           >
             Sign Up
