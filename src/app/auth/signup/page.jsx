@@ -39,12 +39,15 @@ export default function SignupPage() {
     setSuccess("");
     setLoading(true);
 
+    const plan = role === 'seeker' ? 'seeker_free' : 'recruiter_free';
+
     try {
       const result = await signUp.email({
         name: formData.name,
         email: formData.email,
         password: formData.password,
         role,
+        plan,
         callbackURL: "/",
       });
 
