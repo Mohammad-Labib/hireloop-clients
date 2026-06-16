@@ -22,7 +22,7 @@ export const auth = betterAuth({
             },
 
             plan:{
-                default: seeker_free
+                default: 'seeker_free'
             }
         }
     }

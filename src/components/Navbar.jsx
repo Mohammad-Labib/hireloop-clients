@@ -42,6 +42,21 @@ export default function Navbar() {
     { label: "Pricing", href: "/plans" },
   ];
 
+
+  const dashboardLinks = {
+    seeker: '/dashboard/seeker',
+    recruiter: '/dashboard/recruiter'
+  }
+
+  if(user?.email){
+    menuItems.push(
+      {
+        label: 'Dashboard',
+        href: dashboardLinks[user?.role || 'seeker']
+      }
+
+    )
+  }
   return (
     <nav className="sticky top-0 z-50 w-full bg-[#121212]/95 backdrop-blur-lg border-b border-neutral-800 text-white">
       {/* Header wrapper handling spacing */}

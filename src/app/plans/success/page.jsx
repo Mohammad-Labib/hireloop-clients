@@ -7,6 +7,7 @@ import { Card, CardContent, Button, Chip } from "@heroui/react"
 
 // GravityUI Icons
 import { CircleCheck, ArrowLeft, Envelope } from '@gravity-ui/icons'
+import { createSubscription } from '@/lib/actions/subscriptions'
 
 export default async function Success({ searchParams }) {
   const { session_id } = await searchParams
@@ -17,7 +18,7 @@ export default async function Success({ searchParams }) {
   const {
     status,
     customer_details: { email: customerEmail },
-    amount_total
+    metadata
   } = await stripe.checkout.sessions.retrieve(session_id, {
     expand: ['line_items', 'payment_intent']
   })
@@ -29,6 +30,12 @@ export default async function Success({ searchParams }) {
   const formattedAmount = amount_total ? (amount_total / 100).toFixed(2) : null;
 
   if (status === 'complete') {
+    const subsInfo = {
+      email: customerEmail,
+      planId: metadata.planId
+    }
+    const result = await createSubscription(subsInfo);
+    console.log(result);
     return (
       <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-6">

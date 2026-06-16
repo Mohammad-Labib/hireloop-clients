@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { ShieldExclamation, CircleInfo, Rocket } from '@gravity-ui/icons';
 import { getPlanById } from '@/lib/api/plans';
 
+
 const ApplyPage = async ({ params }) => {
     const { id } = await params;
 
@@ -44,7 +45,8 @@ const ApplyPage = async ({ params }) => {
     const applications = await getApplicationsByApplicant(user.id);
 
     const plan = await getPlanById(user?.plan || 'seeker_free')
-    
+    // console.log("plan", plan);
+
     const job = await getJobById(id);
 
     const applicationCount = applications?.length || 0;

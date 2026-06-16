@@ -1,3 +1,4 @@
+import { getUserSession } from "@/lib/core/session";
 import {
   LayoutSideContentLeft,
   Bell,
@@ -7,49 +8,45 @@ import {
   Magnifier,
   Briefcase,
   Person,
+  BriefcaseFill,
+  FileText,
+  GearBranches,
+  HouseFill,
+  CreditCard,
 } from "@gravity-ui/icons";
 
 import { Button, Drawer } from "@heroui/react";
 import Link from "next/link";
 
-export function DashboardSidebar() {
-  const navItems = [
-    {
-      icon: House,
-      href: "/dashboard/recruiter",
-      label: "Home",
-    },
-    {
-      icon: Magnifier,
-      href: "/dashboard/recruiter/jobs",
-      label: "Jobs",
-    },
-    {
-      icon: Bell,
-      href: "/dashboard/recruiter/jobs/new",
-      label: "Post A Job",
-    },
-    {
-      icon: Briefcase,
-      href: "/dashboard/recruiter/company",
-      label: "Company Profile",
-    },
-    {
-      icon: Envelope,
-      href: "/dashboard/recruiter/messages",
-      label: "Messages",
-    },
-    {
-      icon: Person,
-      href: "/dashboard/recruiter/profile",
-      label: "Profile",
-    },
-    {
-      icon: Gear,
-      href: "/dashboard/recruiter/settings",
-      label: "Settings",
-    },
+export async function DashboardSidebar() {
+
+  const user = await getUserSession();
+
+  const recruiterNavlinks = [
+    { icon: House, href: "/dashboard/recruiter", label: "Home", },
+    { icon: Magnifier, href: "/dashboard/recruiter/jobs", label: "Jobs", },
+    { icon: Bell, href: "/dashboard/recruiter/jobs/new", label: "Post A Job", },
+    { icon: Briefcase, href: "/dashboard/recruiter/company", label: "Company Profile", },
+    { icon: Envelope, href: "/dashboard/recruiter/messages", label: "Messages", },
+    { icon: Person, href: "/dashboard/recruiter/profile", label: "Profile", },
+    { icon: Gear, href: "/dashboard/recruiter/settings", label: "Settings", },
   ];
+
+  const seekerNavLinks = [
+  { icon: HouseFill, href: "/dashboard/seeker", label: "Dashboard" },
+  { icon: Magnifier, href: "/dashboard/seeker/jobs", label: "Find Jobs" },
+  { icon: BriefcaseFill, href: "/dashboard/seeker/applications", label: "Applications" },
+  { icon: FileText, href: "/dashboard/seeker/resume", label: "My Resume" },
+  { icon: CreditCard, href: "/dashboard/seeker/billing", label: "Billing" },
+  { icon: GearBranches, href: "/dashboard/seeker/settings", label: "Settings" },
+];
+
+const navLinksMap ={
+  seeker: seekerNavLinks,
+  recruiter:recruiterNavlinks,
+}
+
+  const navItems = navLinksMap[user?.role || 'seeker'];
 
   const navContent = (
     <nav className="flex flex-col gap-1">

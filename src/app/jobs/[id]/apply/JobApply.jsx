@@ -43,7 +43,7 @@ const JobApply = ({ job, applicant }) => {
             alert('Application submitted successfully!');
             setFormData({ resumeLink: '', portfolioLink: '', additionalNotes: '' });
         }
-    };
+    }; 
 
     return (
         <div className="max-w-xl mx-auto p-6 bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-800">
